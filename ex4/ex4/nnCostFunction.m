@@ -75,14 +75,8 @@ K = size(h, 2);
 ys = eye(K);
 total = 0;
 
-yt = zeros(m, K);
-
 for i = 1:m
-  yt(i, :) = ys(y(i), :);
-end
-
-for i = 1:m
-  yval = yt(i, :);
+  yval = ys(y(i), :);
 
   total = total + (yval * log(h(i, :))' + (1 - yval) * log(1 - h(i, :)'));
 end
