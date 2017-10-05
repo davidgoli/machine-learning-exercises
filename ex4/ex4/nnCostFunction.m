@@ -62,28 +62,32 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
-h = zeros(m);
+a1 = [ones(m, 1) X];
+z2 = a1 * Theta1';
+m2 = size(z2, 1);
+a2 = [ones(m2, 1) sigmoid(z2)];
+z3 = a2 * Theta2';
+a3 = sigmoid(z3);
+h = a3;
 
-K = size(y, 1)
+K = size(h, 2);
 
 ys = eye(K);
 total = 0;
 
-for i = 1:m
-  a1 = X(i);
-  z2 = Theta1(i) * a1;
-  a2 = sigmoid(z2);
-  z3 = Theta2(i) * a2;
-  a3 = sigmoid(z3);
-  h(i) = a3;
+yt = zeros(m, K);
 
-  for k = 1:K
-    yval = -ys(y(k), i);
-    total = total + (yval * log(h(k, i)) - (1 - yval) * log(1 - h(k, i)));
-  end
+for i = 1:m
+  yt(i, :) = ys(y(i), :);
 end
 
-J = (1 / m ) * total;
+for i = 1:m
+  yval = yt(i, :);
+
+  total = total + (yval * log(h(i, :))' + (1 - yval) * log(1 - h(i, :)'));
+end
+
+J = -(1 / m) * total;
 
 
 
