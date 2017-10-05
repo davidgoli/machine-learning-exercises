@@ -81,7 +81,16 @@ for i = 1:m
   total = total + (yval * log(h(i, :))' + (1 - yval) * log(1 - h(i, :)'));
 end
 
-J = -(1 / m) * total;
+size(Theta1)
+size(Theta2)
+regtheta1 = [0 Theta1(2:end)];
+regtheta2 = [0 Theta2(2:end)];
+
+sum(regtheta1 .^ 2)
+
+reg = (lambda / (2 * m)) * (sum(regtheta1 .^ 2) + sum(regtheta2 .^ 2));
+
+J = (-(1 / m) * total) + reg;
 
 
 
