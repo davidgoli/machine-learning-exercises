@@ -70,9 +70,7 @@ z3 = a2 * Theta2';
 a3 = sigmoid(z3);
 h = a3;
 
-K = size(h, 2);
-
-ys = eye(K);
+ys = eye(num_labels);
 total = 0;
 
 for i = 1:m
@@ -81,17 +79,25 @@ for i = 1:m
   total = total + (yval * log(h(i, :))' + (1 - yval) * log(1 - h(i, :)'));
 end
 
-size(Theta1)
-size(Theta2)
-regtheta1 = [0 Theta1(2:end)];
-regtheta2 = [0 Theta2(2:end)];
-
-sum(regtheta1 .^ 2)
-
-reg = (lambda / (2 * m)) * (sum(regtheta1 .^ 2) + sum(regtheta2 .^ 2));
+reg1 = sum(sum(Theta1(:, 2:end) .^ 2));
+reg2 = sum(sum(Theta2(:, 2:end) .^ 2));
+reg = (lambda/(2*m)) * (reg1 + reg2);
 
 J = (-(1 / m) * total) + reg;
 
+% step 1: Feedforward
+% step 2: delta
+% output layer
+d3 = a3 - y;
+
+% hidden layer
+d2 = (d3 * Theta2(:, 2:end)) .* sigmoidGradient(z2);
+
+Delta1 = d2' * a1;
+Delta2 = d3' * a2;
+
+Theta1_grad = (1/m) * Delta1;
+Theta2_grad = (1/m) * Delta2;
 
 
 
