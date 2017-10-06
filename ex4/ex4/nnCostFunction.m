@@ -96,8 +96,11 @@ d2 = (d3 * Theta2(:, 2:end)) .* sigmoidGradient(z2);
 Delta1 = d2' * a1;
 Delta2 = d3' * a2;
 
-Theta1_grad = (1/m) * Delta1;
-Theta2_grad = (1/m) * Delta2;
+p1 = (lambda/m)*[zeros(size(Theta1, 1), 1) Theta1(:, 2:end)];
+p2 = (lambda/m)*[zeros(size(Theta2, 1), 1) Theta2(:, 2:end)];
+
+Theta1_grad = (1/m) * Delta1 + p1;
+Theta2_grad = (1/m) * Delta2 + p2;
 
 
 
