@@ -71,6 +71,11 @@ a3 = sigmoid(z3);
 h = a3;
 
 ys = eye(num_labels);
+Y = zeros(m, num_labels);
+for i=1:m
+  Y(i, :)= ys(y(i), :);
+end
+
 total = 0;
 
 for i = 1:m
@@ -88,7 +93,7 @@ J = (-(1 / m) * total) + reg;
 % step 1: Feedforward
 % step 2: delta
 % output layer
-d3 = a3 - y;
+d3 = a3 .- Y;
 
 % hidden layer
 d2 = (d3 * Theta2(:, 2:end)) .* sigmoidGradient(z2);
@@ -99,11 +104,8 @@ Delta2 = d3' * a2;
 p1 = (lambda/m)*[zeros(size(Theta1, 1), 1) Theta1(:, 2:end)];
 p2 = (lambda/m)*[zeros(size(Theta2, 1), 1) Theta2(:, 2:end)];
 
-Theta1_grad = (1/m) * Delta1 + p1;
-Theta2_grad = (1/m) * Delta2 + p2;
-
-
-
+Theta1_grad = Delta1./m + p1;
+Theta2_grad = Delta2./m + p2;
 
 
 % -------------------------------------------------------------
