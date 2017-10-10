@@ -1,12 +1,5 @@
 function [J, grad] = linearRegCostFunction(X, y, theta, lambda)
 
-function g = sigmoid(z)
-%SIGMOID Compute sigmoid functoon
-%   J = SIGMOID(z) computes the sigmoid of z.
-
-g = 1.0 ./ (1.0 + exp(-z));
-end
-
 
 %LINEARREGCOSTFUNCTION Compute cost and gradient for regularized linear 
 %regression with multiple variables
@@ -35,7 +28,13 @@ reg = (lambda / (2 * m)) * sum(regtheta .^ 2);
 
 J = (1 / (2*m)) * sum((h - y) .^ 2) + reg;
 
-grad = diag((1 / m) * sum((h - y) .* X) + ((lambda/m) * regtheta));
+grad = zeros(m);
+
+if m > 1
+  grad = diag((1 / m) * sum((h - y) .* X) + ((lambda/m) * regtheta));
+else
+  grad = sum((h - y) .* X) + (lambda/m) * regtheta;
+end
 
 
 
