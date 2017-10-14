@@ -23,15 +23,16 @@ C = 1;
 %
 
 bestError = 10000
-cfact = 100;
-sfact = 1;
+cfact = 10;
+sfact = 0.1;
 
 sigma = 0.3;
 
-for ci = 0:50
-  c = cfact * ci;
-  for si = 1:30
-    s = sfact * si;
+c = 0.01;
+
+while c < 1000
+  s = 0.01;
+  while s < 30
 
     model = svmTrain(X, y, c, @(x1, x2) gaussianKernel(x1, x2, s));
     predictions = svmPredict(model, Xval);
@@ -42,7 +43,11 @@ for ci = 0:50
       sigma = s
       bestError = error
     end
+
+    s = s * 3;
   end
+
+  c = c * 3;
 end
 
 
