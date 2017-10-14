@@ -22,37 +22,43 @@ C = 1;
 %        mean(double(predictions ~= yval))
 %
 
-bestError = 10000
-cfact = 10;
-sfact = 0.1;
+%bestError = 10000
+%cfact = 10;
+%sfact = 0.1;
+%
+%sigma = 0.3;
+%
+%c = 0.01;
+%
+%while c < 1000
+%  s = 0.01;
+%  while s < 30
+%
+%    c
+%    s
+%    model = svmTrain(X, y, c, @(x1, x2) gaussianKernel(x1, x2, s));
+%    predictions = svmPredict(model, Xval);
+%    error = mean(double(predictions ~= yval));
+%
+%    if error < bestError
+%      C = c
+%      sigma = s
+%      bestError = error
+%    end
+%
+%    s = s * 3;
+%  end
+%
+%  c = c * 3;
+%end
+%
+%C
+%sigma
+%bestError
+%
 
-sigma = 0.3;
-
-c = 0.01;
-
-while c < 1000
-  s = 0.01;
-  while s < 30
-
-    model = svmTrain(X, y, c, @(x1, x2) gaussianKernel(x1, x2, s));
-    predictions = svmPredict(model, Xval);
-    error = mean(double(predictions ~= yval));
-
-    if error < bestError
-      C = c
-      sigma = s
-      bestError = error
-    end
-
-    s = s * 3;
-  end
-
-  c = c * 3;
-end
-
-
-
-
+C = 0.27
+sigma = 0.09
 
 % =========================================================================
 
