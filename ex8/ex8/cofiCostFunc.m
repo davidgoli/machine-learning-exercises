@@ -44,12 +44,24 @@ Theta_grad = zeros(size(Theta));
 
 J = sum(sum((R .* (X * Theta') - Y) .^ 2)) / 2;
 
+%grad = diag(sum((R .* (X * Theta') - Y) .* X) / 2);
+
+for i = 1:size(X, 1)
+    idx = find(R(i, :) == 1);
+    Theta_tmp = Theta(idx, :);
+    Y_tmp = Y(i, idx);
+    h = X(i, :) * Theta_tmp';
+    X_grad(i, :) = (h - Y_tmp) * Theta_tmp;
+end
 
 
-
-
-
-
+for j = 1:size(Theta, 1)
+    idx = find(R(:, j) == 1);
+    X_tmp = X(idx, :);
+    Y_tmp = Y(idx, j);
+    h = X_tmp * Theta(j, :)';
+    Theta_grad(j, :) = (h - Y_tmp)' * X_tmp;
+end
 
 
 
