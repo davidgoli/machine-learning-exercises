@@ -54,7 +54,7 @@ for i = 1:size(X, 1)
     Theta_tmp = Theta(idx, :);
     Y_tmp = Y(i, idx);
     h = X(i, :) * Theta_tmp';
-    X_grad(i, :) = (h - Y_tmp) * Theta_tmp;
+    X_grad(i, :) = (h - Y_tmp) * Theta_tmp + lambda * X(i, :);
 end
 
 
@@ -63,7 +63,7 @@ for j = 1:size(Theta, 1)
     X_tmp = X(idx, :);
     Y_tmp = Y(idx, j);
     h = X_tmp * Theta(j, :)';
-    Theta_grad(j, :) = (h - Y_tmp)' * X_tmp;
+    Theta_grad(j, :) = (h - Y_tmp)' * X_tmp + lambda * Theta(j, :);
 end
 
 
