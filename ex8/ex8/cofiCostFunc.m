@@ -42,7 +42,10 @@ Theta_grad = zeros(size(Theta));
 %
 
 
-J = sum(sum((R .* (X * Theta') - Y) .^ 2)) / 2;
+regTheta = (lambda / 2) * sum(sum(Theta .^ 2));
+regX = (lambda / 2) * sum(sum(X .^ 2));
+
+J = (sum(sum((R .* (X * Theta') - Y) .^ 2)) / 2) + regTheta + regX;
 
 %grad = diag(sum((R .* (X * Theta') - Y) .* X) / 2);
 
