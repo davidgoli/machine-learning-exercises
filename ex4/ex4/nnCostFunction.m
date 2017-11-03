@@ -70,25 +70,15 @@ z3 = a2 * Theta2';
 a3 = sigmoid(z3);
 h = a3;
 
-ys = eye(num_labels);
-Y = zeros(m, num_labels);
-for i=1:m
-  Y(i, :)= ys(y(i), :);
-end
+Y = eye(num_labels)(y, :);
 
-total = 0;
-
-for i = 1:m
-  yval = ys(y(i), :);
-
-  total = total + (yval * log(h(i, :))' + (1 - yval) * log(1 - h(i, :)'));
-end
+cost_sum = sum(sum((Y .* log(h)) + (1 - Y) .* log(1 - h)));
 
 reg1 = sum(sum(Theta1(:, 2:end) .^ 2));
 reg2 = sum(sum(Theta2(:, 2:end) .^ 2));
-reg = (lambda/(2*m)) * (reg1 + reg2);
+reg = (lambda / (2 * m)) * (reg1 + reg2);
 
-J = (-(1 / m) * total) + reg;
+J = (-(1 / m) * cost_sum) + reg;
 
 % step 1: Feedforward
 % step 2: delta
